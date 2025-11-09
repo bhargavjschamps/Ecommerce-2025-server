@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import connectDb from './utils/db.js';
 import cloudinary from 'cloudinary';
 import cors from 'cors';
+import axios from 'axios';
 
 dotenv.config();
 
@@ -14,6 +15,22 @@ cloudinary.v2.config({
 });
 
 const app = express();
+
+const url = `https://ecommerce-2025-server-2.onrender.com`;
+const interval = 30000;
+
+function reloadWebsite() {
+  axios
+    .get(url)
+    .then((response) => {
+      console.log("website reloded");
+    })
+    .catch((error) => {
+      console.error(`Error : ${error.message}`);
+    });
+}
+
+setInterval(reloadWebsite, interval);
 app.use(express.json());
 app.use(cors());
 
